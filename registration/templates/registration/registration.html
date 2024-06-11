@@ -1,0 +1,53 @@
+{% extends 'registration/layout.html' %}
+{% load bootstrap5 %}
+{% block title %}SignUpn{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid" style="height: 100vh">
+        <div class="row justify-content-md-center row align-items-center" style="height: 100vh">
+            <div class="col-3" style="background: white; border-radius: 25px; padding-top: 20px">
+                <div class="row h3 text-center">
+                    <p>
+                        Добро пожаловать <br>
+                        В компьютер маркет
+                    </p>
+                </div>
+                <div class="col-8 align-self-center mx-auto">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% bootstrap_label 'Логин' %}
+                        {% bootstrap_field form.username show_label=False placeholder='Логин' %}
+
+                        {% bootstrap_label 'Пароль' %}
+                        {% bootstrap_field form.password1 show_label=False placeholder='Пароль' %}
+
+                        {% bootstrap_label 'Пароль' %}
+                        {% bootstrap_field form.password2 show_label=False placeholder='Пароль' %}
+
+                        {% bootstrap_label 'Дата рождения' %}
+                        {% bootstrap_field form.date_of_birth show_label=False placeholder='Дата рождения' %}
+
+                        {{ form.errors }}
+                        <div class="d-grid gap-1 col-9 mx-auto" style="padding-bottom: 10px">
+                            <button type="submit" class="btn btn-success">
+                                Зарегистрироваться
+                            </button>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                Или
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-grid gap-1 col-9 mx-auto" style="padding-bottom: 30px; padding-top: 5px">
+                                <a href="{% url 'login' %}"  class="btn btn-success">
+                                    Войти
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

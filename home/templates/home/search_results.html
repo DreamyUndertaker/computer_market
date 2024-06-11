@@ -1,0 +1,17 @@
+{% extends 'home/layout.html' %}
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5 mb-4">Результаты поиска</h1>
+        {% if product_results %}
+            <div class="list-group">
+                {% for product in product_results %}
+                    <a href="{% url 'product_detail' product.slug %}" class="list-group-item list-group-item-action">
+                        {{ product.name }} - {{ product.price }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="mt-4">Нет продуктов соответствующих поисковому запросу.</p>
+        {% endif %}
+    </div>
+{% endblock %}

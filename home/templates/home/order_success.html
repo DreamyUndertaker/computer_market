@@ -1,0 +1,7 @@
+{% extends 'home/layout.html' %}
+
+{% block content %}
+    <h1>Order Successful</h1>
+    <p>Thank you for your purchase! Your order has been placed successfully.</p>
+    <a href="{% url 'product_list' %}" class="btn btn-primary">Continue Shopping</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'home/layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="display-4 mt-5 mb-4">User Profile</h1>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Username:</h5>
+                <p class="card-text">{{ profile_user.username }}</p>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Email:</h5>
+                <p class="card-text">{{ profile_user.email }}</p>
+            </div>
+        </div>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Выйти</a>
+    </div>
+{% endblock %}
