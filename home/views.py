@@ -15,7 +15,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        top_selling_products = Product.objects.annotate(num_cart_items=Count('cartitem')).order_by('-num_cart_items')[:5]
+        top_selling_products = Product.objects.annotate(num_cart_items=Count('cartitem')).order_by('-num_cart_items')[:2]
         context['top_selling_products'] = top_selling_products
         return context
 
