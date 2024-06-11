@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm, UsernameField, UserCreationForm
-
-from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -34,23 +32,23 @@ class RegistrationForm(UserCreationForm):
             'label': 'Подтвердите пароль',
         }
     ))
-    date_of_birth = forms.DateField(widget=forms.DateInput(
+    email = forms.EmailField(widget=forms.EmailInput(
         attrs={
             'class': 'form-control',
-            'placeholder': 'Дата рождения',
-            'id': 'date_of_birth',
+            'placeholder': 'Почта',
+            'id': 'email',
         }
-    ), input_formats=['%d/%m/%Y'])  # Ожидаемый формат даты
+    ))
 
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2', 'date_of_birth']
+        fields = ['username', 'password1', 'password2', 'email']
 
-    def clean_date_of_birth(self):
-        date_of_birth = self.cleaned_data.get('date_of_birth')
-        if date_of_birth is None:
-            raise ValidationError("Введите правильную дату.")
-        return date_of_birth
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Пользователь с такой почтой уже существует.")
+        return email
 
 
 class UserLoginForm(AuthenticationForm):
