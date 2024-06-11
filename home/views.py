@@ -16,6 +16,8 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         top_selling_products = Product.objects.annotate(num_cart_items=Count('cartitem')).order_by('-num_cart_items')[:2]
+        for product in top_selling_products:
+            product.description_lines = product.description.split('\n')
         context['top_selling_products'] = top_selling_products
         return context
 
