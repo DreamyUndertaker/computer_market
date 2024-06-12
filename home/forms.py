@@ -20,3 +20,34 @@ class OrderForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'placeholder': 'Введите ваш телефон'}),
         }
 
+
+class ContactForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        label='Ваше имя',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваше имя',
+            }
+        )
+    )
+    email = forms.EmailField(
+        label='Ваша почта',
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваша почта',
+            }
+        )
+    )
+    message = forms.CharField(
+        label='Ваше сообщение',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваше сообщение',
+                'rows': 5,
+            }
+        )
+    )

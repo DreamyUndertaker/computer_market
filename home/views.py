@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
@@ -7,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from .models import Category, Product, Cart, CartItem, Order, OrderItem
-from .forms import OrderForm
+from .forms import OrderForm, ContactForm
 
 
 class HomePageView(TemplateView):
@@ -31,6 +32,7 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         context['category'] = self.category
+        context['contact_form'] = ContactForm()
         return context
 
     def get_queryset(self):
@@ -41,6 +43,25 @@ class ProductListView(ListView):
             self.category = get_object_or_404(Category, slug=category_slug)
             self.products = self.products.filter(category=self.category)
         return self.products
+
+    def post(self, request, *args, **kwargs):
+        contact_form = ContactForm(request.POST)
+        if contact_form.is_valid():
+            name = contact_form.cleaned_data['name']
+            email = contact_form.cleaned_data['email']
+            message = contact_form.cleaned_data['message']
+
+            send_mail(
+                f"Новое сообщение от {name}",
+                message,
+                email,
+                ['your_email@example.com'],  # Поменяй на свою почту (почта отправителя)
+                fail_silently=False,
+            )
+
+            return redirect('product_list')
+
+        return self.get(request, *args, **kwargs)
 
 
 class ProductDetailView(DetailView):

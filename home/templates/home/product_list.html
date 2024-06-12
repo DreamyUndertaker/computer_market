@@ -1,6 +1,7 @@
 {% extends 'home/layout.html' %}
 
 {% block content %}
+<div class="container">
     <h1>Каталог товаров</h1>
 
     <div class="row">
@@ -30,5 +31,14 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="d-flex justify-content-center align-items-center my-4">
+            <p class="mb-0 me-3">Появился вопрос о выборе компьютера? задайте его нам</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactFormModal">
+                Свяжитесь с нами
+            </button>
+        </div>
+
+        {% include 'home/contact_form.html' %}
     </div>
+</div>
 {% endblock %}
